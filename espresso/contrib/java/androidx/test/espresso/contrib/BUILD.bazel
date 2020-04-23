@@ -1,3 +1,8 @@
+load("//build_extensions:release.bzl", "axt_release_lib")
+load("//build_extensions:maven_repo.bzl", "maven_artifact")
+load("//build_extensions:axt_versions.bzl", "ANDROIDX_VERSION", "ESPRESSO_VERSION", "GOOGLE_MATERIAL_VERSION")
+load("//build_extensions:combine_jars.bzl", "combine_jars")
+
 # Description:
 #   Contributed / non-core functionality of Espresso. Tools which add on to
 #   Espresso belong here.
@@ -5,6 +10,12 @@ licenses(["notice"])  # Apache License 2.0
 
 package(
     default_visibility = ["//:__subpackages__"],
+)
+
+android_library(
+    name = "resources",
+    manifest = "AndroidManifest.xml",
+    resource_files = glob(["res/**"]),
 )
 
 android_library(
@@ -41,8 +52,8 @@ android_library(
         "//espresso/core/java/androidx/test/espresso:framework",
         "//espresso/core/java/androidx/test/espresso:interface",
         "//espresso/core/java/androidx/test/espresso/matcher",
-        "@maven//:org_hamcrest_hamcrest_all",
         "@maven//:com_google_code_findbugs_jsr305",
+        "@maven//:org_hamcrest_hamcrest_all",
     ],
 )
 
@@ -58,8 +69,8 @@ android_library(
         "//espresso/core/java/androidx/test/espresso:framework",
         "//espresso/core/java/androidx/test/espresso:interface",
         "//espresso/core/java/androidx/test/espresso/matcher",
-        "@maven//:org_hamcrest_hamcrest_all",
         "@maven//:com_google_code_findbugs_jsr305",
+        "@maven//:org_hamcrest_hamcrest_all",
     ],
 )
 
@@ -74,12 +85,12 @@ android_library(
     deps = [
         ":androidx_neverlink",
         ":drawerlayout_neverlink",
+        ":resources",
         "//espresso/core/java/androidx/test/espresso",
         "//espresso/core/java/androidx/test/espresso:framework",
         "//espresso/core/java/androidx/test/espresso:interface",
         "//espresso/core/java/androidx/test/espresso/matcher",
         "@maven//:org_hamcrest_hamcrest_all",
-        "@maven//:com_google_code_findbugs_jsr305",
     ],
 )
 
@@ -124,8 +135,8 @@ android_library(
         "//espresso/core/java/androidx/test/espresso:framework",
         "//espresso/core/java/androidx/test/espresso:interface",
         "//espresso/core/java/androidx/test/espresso/matcher",
-        "@maven//:org_hamcrest_hamcrest_all",
         "@maven//:com_google_code_findbugs_jsr305",
+        "@maven//:org_hamcrest_hamcrest_all",
     ],
 )
 
@@ -198,8 +209,6 @@ android_library(
     ],
 )
 
-load("//build_extensions:release.bzl", "axt_release_lib")
-
 android_library(
     name = "espresso_contrib_release_lib",
     testonly = 1,
@@ -224,10 +233,6 @@ axt_release_lib(
         ":espresso_contrib_release_lib",
     ],
 )
-
-load("//build_extensions:maven_repo.bzl", "maven_artifact")
-load("//build_extensions:axt_versions.bzl", "ANDROIDX_VERSION", "ESPRESSO_VERSION", "GOOGLE_MATERIAL_VERSION")
-load("//build_extensions:combine_jars.bzl", "combine_jars")
 
 filegroup(
     name = "contrib_src",
